@@ -31,6 +31,7 @@ namespace Razor2Rail
         {
             InitializeComponent();
 
+
         }
 
         private void FormatRails(List<string> railLocationStrings)
@@ -50,7 +51,11 @@ namespace Razor2Rail
             foreach (var line in lines)
             {
                 string[] splitLine = line.Split("|");
-                splitStrings.Add(splitLine[1]);             
+                if (splitLine[0].ToString() == "Assistant.Macros.WalkAction")
+                {
+                    splitStrings.Add(splitLine[1]);
+                }
+                
             }
             FormatRails(splitStrings);
         }
@@ -64,33 +69,40 @@ namespace Razor2Rail
             if (openFileDialog.ShowDialog() == true)
             {
                 fileName = openFileDialog.FileName;
-                ParseDataFile(fileName);
             }
+
+            string[] fileNameSplit = fileName.Split("\\");
+            Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 255));
+            lbl_Instructions.Foreground = colorBrush;
+            lbl_Instructions.Content = fileNameSplit.Last() + " Selected";
+            lbl_Instructions.HorizontalAlignment = HorizontalAlignment.Center;
         }
 
-        private static void SaveToFile()
+        private void SaveToFile()
         {
-            TextWriter writer = new StreamWriter("Finished.txt");
+            TextWriter writer = new StreamWriter("Converted Rails.txt");
 
             foreach (string line in formattedRailStrings)
             {
                 writer.WriteLine(line);
             }
+            Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 43, 255, 0));
+            lbl_Instructions.Content = "Converted " + formattedRailStrings.Count.ToString() + " Lines";
+            lbl_Instructions.Foreground = colorBrush;
             writer.Close();
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
-        }
-        private void btn_Format_Click(object sender, RoutedEventArgs e)
-        {
-            FormatRails(splitStrings);
-        }
-        private void btn_Save_Click(object sender, RoutedEventArgs e)
-        {
-            SaveToFile();
+            btn_Convert.IsEnabled = true;
         }
 
+        private void btn_Convert_Click(object sender, RoutedEventArgs e)
+        {
+            ParseDataFile(fileName);
+            btn_Convert.IsEnabled = false;
+
+        }
     }
 }

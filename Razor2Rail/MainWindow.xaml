@@ -5,12 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Razor2Rail"
         mc:Ignorable="d"
-        Title="Razor2Rails by Xyio" Height="129" Width="313">
-    <Grid>
-        <Grid.Background>
-            <ImageBrush/>
-        </Grid.Background>
-        <Button x:Name="btn_Open" Content="Open Macro" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Height="51" Width="183" Click="btn_Open_Click"/>
+        Title="Razor2Rails by Xyio" Height="130" Width="356" ResizeMode="NoResize">
+    <Grid Background="Black">
+        <Button x:Name="btn_Open" Content="Open" HorizontalAlignment="Left" Margin="43,55,0,0" VerticalAlignment="Top" Height="30" Width="95" Click="btn_Open_Click"/>
+        <Button x:Name="btn_Convert" Content="Convert" HorizontalAlignment="Left" Margin="219,55,0,0" VerticalAlignment="Top" Height="30" Width="95" Click="btn_Convert_Click"/>
+        <Label x:Name="lbl_Instructions" Content="Click open and select a .macro file" Margin="50,14,42,0" VerticalAlignment="Top" FontSize="16" Background="{x:Null}" FontWeight="Normal" Foreground="#FFC717C8"/>
 
     </Grid>
 </Window>
