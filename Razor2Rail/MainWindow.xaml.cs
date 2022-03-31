@@ -3,17 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Razor2Rail
 {
@@ -27,6 +18,16 @@ namespace Razor2Rail
         public static List<string> splitStrings = new();
         public static List<string> formattedRailStrings = new();
 
+        //TODO: handle errors and bad input types
+        static int x;
+        static int y;
+        static int directionMovedLast = 1;
+
+        //Output ready lists.
+        public static List<string> moveList = new();
+        public static List<string> xCoord = new();
+        public static List<string> yCoord = new();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,12 +37,277 @@ namespace Razor2Rail
 
         private void FormatRails(List<string> railLocationStrings)
         {
+            //Create moveList
             foreach(string railLoc in railLocationStrings)
             {
+                //Set the direction to be compatable with our script in game.
                 int finishedRailLoc = Int32.Parse(railLoc) + 1;
 
-                formattedRailStrings.Add("pushlist moveList '"+finishedRailLoc.ToString()+"'");
+                moveList.Add("pushlist moveList '"+finishedRailLoc.ToString()+"'");
+                
             }
+
+            //Create xCoord and yCoord Lists
+            foreach (string nextStep in railLocationStrings)
+            {
+                //Set the direction to be compatable with our script in game.
+                int railDirection = Int32.Parse(nextStep) + 1;
+
+                switch (railDirection)
+                {
+                    //North (X + 0 and Y - 1)
+                    case 1:
+                        {
+                            if(directionMovedLast == railDirection)
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = (y - 1).ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y - 1;
+                                directionMovedLast = railDirection;
+
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+                            break;
+                        }
+                    //Right (X + 1 and Y - 1)
+                    case 2:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = (x + 1).ToString("X");
+                                string yToHex = (y - 1).ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x + 1;
+                                y = y - 1;
+                                directionMovedLast = railDirection;
+
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+
+                            break;
+                        }
+                    //East (X + 1 and Y + 0) 
+                    case 3:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = (x + 1).ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x + 1;
+                                y = y;
+                                directionMovedLast = railDirection;
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+
+                            break;
+                        }
+                    //DOWN (X + 1 and Y + 1)
+                    case 4:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = (x + 1).ToString("X");
+                                string yToHex = (y + 1).ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x + 1;
+                                y = y + 1;
+                                directionMovedLast = railDirection;
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+
+                            break;
+                        }
+                    //South (X + 0 and Y + 1)
+                    case 5:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = (y + 1).ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y + 1;
+                                directionMovedLast = railDirection;
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+
+                            break;
+                        }
+                    //Left (X - 1 and Y + 1
+                    case 6:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = (x - 1).ToString("X");
+                                string yToHex = (y + 1).ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x - 1;
+                                y = y + 1;
+                                directionMovedLast = railDirection;
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+
+                            break;
+                        }
+                    //West (X -1 and Y + 0) 
+                    case 7:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = (x - 1).ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x - 1;
+                                y = y;
+                                directionMovedLast = railDirection;
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+                            break;
+                        }
+                    //Up (X - 1 and Y - 1)
+                    case 8:
+                        {
+                            if (directionMovedLast == railDirection)
+                            {
+                                string xToHex = (x - 1).ToString("X");
+                                string yToHex = (y - 1).ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x - 1;
+                                y = y - 1;
+                                directionMovedLast = railDirection;
+                            }
+                            else
+                            {
+                                string xToHex = x.ToString("X");
+                                string yToHex = y.ToString("X");
+
+                                xCoord.Add("pushlist xCoord '0x" + xToHex + "'");
+                                yCoord.Add("pushlist yCoord '0x" + yToHex + "'");
+
+                                x = x;
+                                y = y;
+                                directionMovedLast = railDirection;
+
+                            }
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
+
+            //Save our lists to text to be added in game.
             SaveToFile();
         }
         private void ParseDataFile(string dataFile)
@@ -80,16 +346,46 @@ namespace Razor2Rail
 
         private void SaveToFile()
         {
-            TextWriter writer = new StreamWriter("Converted Rails.txt");
 
-            foreach (string line in formattedRailStrings)
+            TextWriter writer = new StreamWriter("rails.txt");
+
+            //moveList Section
+            writer.WriteLine("if not listexists moveList");
+            writer.WriteLine("createlist moveList");
+            foreach (string line in moveList)
             {
                 writer.WriteLine(line);
             }
-            Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 43, 255, 0));
-            lbl_Instructions.Content = "Converted " + formattedRailStrings.Count.ToString() + " Lines";
-            lbl_Instructions.Foreground = colorBrush;
+            writer.WriteLine("endif");
+            writer.WriteLine(String.Empty);
+
+            //xCoord Section
+            writer.WriteLine("if not listexists xCoord");
+            writer.WriteLine("createlist xCoord");
+            foreach (string line in xCoord)
+            {
+                writer.WriteLine(line);
+            }
+            writer.WriteLine("endif");
+            writer.WriteLine(String.Empty);
+
+            //yCoordSection
+            writer.WriteLine("if not listexists yCoord");
+            writer.WriteLine("createlist yCoord");
+            foreach (string line in yCoord)
+            {
+                writer.WriteLine(line);
+            }
+            writer.WriteLine("endif");
+            writer.WriteLine(String.Empty);
+
             writer.Close();
+
+            //Update UI
+            Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 43, 255, 0));
+            lbl_Instructions.Content = "Converted " + moveList.Count.ToString() + " Lines";
+            lbl_Instructions.Foreground = colorBrush;
+
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)
@@ -100,6 +396,10 @@ namespace Razor2Rail
 
         private void btn_Convert_Click(object sender, RoutedEventArgs e)
         {
+            //Quick and Dirty.
+            x = Int32.Parse(txtBox_xCoord.Text);
+            y = Int32.Parse(txtBox_yCoord.Text);
+
             ParseDataFile(fileName);
             btn_Convert.IsEnabled = false;
 

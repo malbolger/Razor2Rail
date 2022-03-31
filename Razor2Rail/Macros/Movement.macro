@@ -1,15 +1,72 @@
-Assistant.Macros.WalkAction|7
-Assistant.Macros.WalkAction|0
-Assistant.Macros.WalkAction|0
-Assistant.Macros.WalkAction|1
-Assistant.Macros.WalkAction|1
-Assistant.Macros.WalkAction|2
-Assistant.Macros.WalkAction|2
-Assistant.Macros.WalkAction|3
-Assistant.Macros.WalkAction|3
-Assistant.Macros.WalkAction|4
-Assistant.Macros.WalkAction|4
-Assistant.Macros.WalkAction|5
-Assistant.Macros.WalkAction|5
-Assistant.Macros.WalkAction|6
-Assistant.Macros.WalkAction|6
+# Use automated movement.
+setvar useRails 1
+
+# Delay before movment attempts
+setvar movementDelay 200
+
+# Variable to make our location
+# persist across errors 
+setvar xListEntry 0
+setvar yListEntry 0
+   
+    while useRails == 1
+        if atlist xCoord 0 as x
+            setvar xListEntry x
+        endif
+        if atlist yCoord 0 as y
+            setvar yListEntry y
+        endif
+        #setvar yListEntry = atlist yCoord 0        
+        if position xListEntry yListEntry              
+            overhead 'on location'
+            poplist moveList 'front'
+            poplist xCoord 'front'
+            poplist yCoord 'front'
+            #wait movementDelay
+            else            
+                if atlist moveList 0 as firstEntry
+                    #overhead xListEntry
+                    #overhead yListEntry
+                    if firstEntry == 1
+                        overhead '::: moving north :::' 55
+                        walk 'north'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 2
+                        overhead '::: moving right :::' 55
+                        walk 'right'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 3
+                        overhead '::: moving east :::' 55
+                        walk 'east'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 4
+                        overhead '::: moving down :::' 55
+                        walk 'down'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 5
+                        overhead '::: moving south :::' 55
+                        walk 'south'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 6
+                        overhead '::: moving left :::' 55
+                        walk 'left'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 7
+                        overhead '::: moving west :::' 55
+                        walk 'west'
+                        wait movementDelay
+                    endif
+                    if firstEntry == 8
+                        overhead '::: moving up :::' 55
+                        walk 'up'
+                        wait movementDelay
+                    endif
+                endif
+            endif
+    endwhile  
