@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace Razor2Rail
 {
@@ -21,7 +24,7 @@ namespace Razor2Rail
         //TODO: handle errors and bad input types
         static int x;
         static int y;
-        static int directionMovedLast = 1;
+        static int directionMovedLast = 0;
 
         //Output ready lists.
         public static List<string> moveList = new();
@@ -30,9 +33,7 @@ namespace Razor2Rail
 
         public MainWindow()
         {
-            InitializeComponent();
-
-
+            InitializeComponent();          
         }
 
         private void FormatRails(List<string> railLocationStrings)
@@ -325,25 +326,36 @@ namespace Razor2Rail
             }
             FormatRails(splitStrings);
         }
-
         private void OpenFile()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = @"C:\Program Files(x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Macros";
-            openFileDialog.Filter = "All Files (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                fileName = openFileDialog.FileName;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = @"C:\Program Files(x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Macros";
+                openFileDialog.Filter = "All Files (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    fileName = openFileDialog.FileName;
+                }
+
+                if (fileName != null)
+                {
+                    string[] fileNameSplit = fileName.Split("\\");
+                    Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 255));
+                    lbl_Instructions.Foreground = colorBrush;
+                    lbl_Instructions.Content = fileNameSplit.Last() + " Selected";
+                    lbl_Instructions.HorizontalAlignment = HorizontalAlignment.Center;
+                    lbl_Instructions2.Visibility = Visibility.Collapsed;
+
+                    btn_Convert.IsEnabled = true;
+                }
             }
+            catch (Exception ex)
+            {
 
-            string[] fileNameSplit = fileName.Split("\\");
-            Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 255));
-            lbl_Instructions.Foreground = colorBrush;
-            lbl_Instructions.Content = fileNameSplit.Last() + " Selected";
-            lbl_Instructions.HorizontalAlignment = HorizontalAlignment.Center;
+            }
         }
-
         private void SaveToFile()
         {
 
@@ -387,22 +399,92 @@ namespace Razor2Rail
             lbl_Instructions.Foreground = colorBrush;
 
         }
-
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
-            btn_Convert.IsEnabled = true;
         }
-
         private void btn_Convert_Click(object sender, RoutedEventArgs e)
         {
+            bool canContinue = false;
+
             //Quick and Dirty.
-            x = Int32.Parse(txtBox_xCoord.Text);
-            y = Int32.Parse(txtBox_yCoord.Text);
+            if (txtBox_xCoord.Text != String.Empty && txtBox_yCoord.Text != String.Empty)
+            {
+                x = Int32.Parse(txtBox_xCoord.Text);
+                y = Int32.Parse(txtBox_yCoord.Text);
+                canContinue = true;
+            }
+            else
+            {
+                MessageBox.Show("You're missing a coordinate.");
+                canContinue = false;              
+            }
 
-            ParseDataFile(fileName);
-            btn_Convert.IsEnabled = false;
+            if (canContinue)
+            {
+                ParseDataFile(fileName);
+                btn_Convert.IsEnabled = false;
 
+                ComboBoxItem selectedItem = (ComboBoxItem)Combo_Direction.SelectedItem;
+                string startDirection = selectedItem.Content.ToString();
+
+                switch (startDirection)
+                {
+                    case "Up":
+                        {
+                            directionMovedLast = 1;
+                            return;
+                        }
+                    case "North":
+                        {
+                            directionMovedLast = 2;
+                            return;
+                        }
+                    case "Right":
+                        {
+                            directionMovedLast = 3;
+                            return;
+                        }
+                    case "East":
+                        {
+                            directionMovedLast = 4;
+                            return;
+                        }
+                    case "Down":
+                        {
+                            directionMovedLast = 5;
+                            return;
+                        }
+                    case "South":
+                        {
+                            directionMovedLast = 6;
+                            return;
+                        }
+                    case "Left":
+                        {
+                            directionMovedLast = 7;
+                            return;
+                        }
+                    case "West":
+                        {
+                            directionMovedLast = 8;
+                            return;
+                        }
+                }
+            }
+        }
+        //Make sure that only intergers can be input into our text boxes
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        //Remove our default text and remove the handler so it wont work a second time.
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            textBox.Text = String.Empty;
+            textBox.GotFocus -= TextBox_GotFocus;
         }
     }
 }

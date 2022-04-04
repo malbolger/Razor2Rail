@@ -5,15 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Razor2Rail"
         mc:Ignorable="d"
-        Title="Razor2Rails by Xyio" Height="130" Width="356" ResizeMode="NoResize">
+        Title="Razor2Rails by Xyio" Height="192" Width="356" ResizeMode="NoResize">
     <Grid Background="Black">
-        <Button x:Name="btn_Open" Content="Open" Margin="233,57,0,0" VerticalAlignment="Top" Height="24" Click="btn_Open_Click" HorizontalAlignment="Left" Width="50"/>
-        <Button x:Name="btn_Convert" Content="Convert" Margin="286,57,0,0" VerticalAlignment="Top" Height="24" Click="btn_Convert_Click" HorizontalAlignment="Left" Width="50"/>
-        <Label x:Name="lbl_Instructions" Content="Click open and select a .macro file" Margin="50,14,42,0" VerticalAlignment="Top" FontSize="16" Background="{x:Null}" FontWeight="Normal" Foreground="#FFC717C8"/>
-        <Label Content="Starting Location" HorizontalAlignment="Left" Margin="21,40,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" FontSize="10"/>
-        <Rectangle HorizontalAlignment="Left" Height="24" Margin="25,57,0,0" Stroke="#FF0DF9FF" VerticalAlignment="Top" Width="133"/>
-        <TextBox x:Name="txtBox_xCoord" HorizontalAlignment="Left" Margin="31,60,0,0" TextWrapping="Wrap" Text="X" VerticalAlignment="Top" Width="50"/>
-        <TextBox x:Name="txtBox_yCoord" HorizontalAlignment="Left" Margin="102,60,0,0" TextWrapping="Wrap" Text="Y" VerticalAlignment="Top" Width="50"/>
+        <Button x:Name="btn_Open" Content="Open" Margin="220,125,0,0" VerticalAlignment="Top" Height="24" Click="btn_Open_Click" HorizontalAlignment="Left" Width="50"/>
+        <Button x:Name="btn_Convert" Content="Convert" Margin="273,125,0,0" VerticalAlignment="Top" Height="24" IsEnabled="False" Click="btn_Convert_Click" HorizontalAlignment="Left" Width="50"/>
+        <Label x:Name="lbl_Instructions" Content="Set your location and direction" Margin="45,15,47,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" Background="{x:Null}" FontWeight="Normal" Foreground="#FFC717C8"/>
+        <Label x:Name="lbl_Instructions2" Content="click open and select .macro file" Margin="0,38,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="16" Background="{x:Null}" FontWeight="Normal" Foreground="#FFC717C8"/>
+        <Label Content="Starting Location" HorizontalAlignment="Left" Margin="27,76,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" FontSize="10"/>
+        <Rectangle HorizontalAlignment="Left" Height="24" Margin="21,94,0,0" Stroke="#FF0DF9FF" VerticalAlignment="Top" Width="143"/>
+        <TextBox x:Name="txtBox_xCoord" GotFocus="TextBox_GotFocus" PreviewTextInput="PreviewTextInput" HorizontalAlignment="Left" Margin="41,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+        <TextBox x:Name="txtBox_yCoord" GotFocus="TextBox_GotFocus" IsEnabled="{Binding ElementName=txtBox_xCoord,Path=Text.Length}" PreviewTextInput="PreviewTextInput" HorizontalAlignment="Left" Margin="112,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+        <ComboBox x:Name="Combo_Direction" HorizontalAlignment="Left" Margin="203,95,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.43,0.52">
+            <ComboBoxItem Content="Up" Name="Up" IsSelected="True"></ComboBoxItem>
+            <ComboBoxItem Content="North" Name="North"></ComboBoxItem>
+            <ComboBoxItem Content="Right" Name="Right"></ComboBoxItem>
+            <ComboBoxItem Content="East" Name="East"></ComboBoxItem>
+            <ComboBoxItem Content="Down" Name="Down"></ComboBoxItem>
+            <ComboBoxItem Content="South" Name="South"></ComboBoxItem>
+            <ComboBoxItem Content="Left" Name="Left"></ComboBoxItem>
+            <ComboBoxItem Content="West" Name="West"></ComboBoxItem>
+        </ComboBox>
+        <Label Content="Starting Direction" HorizontalAlignment="Left" Margin="208,76,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" FontSize="10"/>
+        <Label Content="X:" HorizontalAlignment="Left" Margin="23,93,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF"/>
+        <Label Content="Y:" HorizontalAlignment="Left" Margin="92,93,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF"/>
+
 
     </Grid>
 </Window>
