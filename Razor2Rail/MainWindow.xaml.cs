@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Razor2Rail
 {
@@ -24,7 +24,7 @@ namespace Razor2Rail
         //TODO: handle errors and bad input types
         static int x;
         static int y;
-        static int directionMovedLast = 0;
+        static int directionMovedLast = 1;
 
         //Output ready lists.
         public static List<string> moveList = new();
@@ -33,19 +33,21 @@ namespace Razor2Rail
 
         public MainWindow()
         {
-            InitializeComponent();          
+            InitializeComponent();
+
+
         }
 
         private void FormatRails(List<string> railLocationStrings)
         {
             //Create moveList
-            foreach(string railLoc in railLocationStrings)
+            foreach (string railLoc in railLocationStrings)
             {
                 //Set the direction to be compatable with our script in game.
                 int finishedRailLoc = Int32.Parse(railLoc) + 1;
 
-                moveList.Add("pushlist moveList '"+finishedRailLoc.ToString()+"'");
-                
+                moveList.Add("pushlist moveList '" + finishedRailLoc.ToString() + "'");
+
             }
 
             //Create xCoord and yCoord Lists
@@ -59,7 +61,7 @@ namespace Razor2Rail
                     //North (X + 0 and Y - 1)
                     case 1:
                         {
-                            if(directionMovedLast == railDirection)
+                            if (directionMovedLast == railDirection)
                             {
                                 string xToHex = x.ToString("X");
                                 string yToHex = (y - 1).ToString("X");
@@ -312,7 +314,7 @@ namespace Razor2Rail
             SaveToFile();
         }
         private void ParseDataFile(string dataFile)
-        {     
+        {
             var lines = File.ReadAllLines(dataFile);
 
             foreach (var line in lines)
@@ -322,40 +324,29 @@ namespace Razor2Rail
                 {
                     splitStrings.Add(splitLine[1]);
                 }
-                
+
             }
             FormatRails(splitStrings);
         }
+
         private void OpenFile()
         {
-            try
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"C:\Program Files(x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Macros";
+            openFileDialog.Filter = "All Files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.InitialDirectory = @"C:\Program Files(x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Macros";
-                openFileDialog.Filter = "All Files (*.*)|*.*";
-
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    fileName = openFileDialog.FileName;
-                }
-
-                if (fileName != null)
-                {
-                    string[] fileNameSplit = fileName.Split("\\");
-                    Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 255));
-                    lbl_Instructions.Foreground = colorBrush;
-                    lbl_Instructions.Content = fileNameSplit.Last() + " Selected";
-                    lbl_Instructions.HorizontalAlignment = HorizontalAlignment.Center;
-                    lbl_Instructions2.Visibility = Visibility.Collapsed;
-
-                    btn_Convert.IsEnabled = true;
-                }
+                fileName = openFileDialog.FileName;
             }
-            catch (Exception ex)
-            {
 
-            }
+            string[] fileNameSplit = fileName.Split("\\");
+            Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 255));
+            lbl_Instructions.Foreground = colorBrush;
+            lbl_Instructions.Content = fileNameSplit.Last() + " Selected";
+            lbl_Instructions.HorizontalAlignment = HorizontalAlignment.Center;
         }
+
         private void SaveToFile()
         {
 
@@ -399,79 +390,22 @@ namespace Razor2Rail
             lbl_Instructions.Foreground = colorBrush;
 
         }
+
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
+            btn_Convert.IsEnabled = true;
         }
+
         private void btn_Convert_Click(object sender, RoutedEventArgs e)
         {
-            bool canContinue = false;
-
             //Quick and Dirty.
-            if (txtBox_xCoord.Text != String.Empty && txtBox_yCoord.Text != String.Empty)
-            {
-                x = Int32.Parse(txtBox_xCoord.Text);
-                y = Int32.Parse(txtBox_yCoord.Text);
-                canContinue = true;
-            }
-            else
-            {
-                MessageBox.Show("You're missing a coordinate.");
-                canContinue = false;              
-            }
+            x = Int32.Parse(txtBox_xCoord.Text);
+            y = Int32.Parse(txtBox_yCoord.Text);
 
-            if (canContinue)
-            {
-                ParseDataFile(fileName);
-                btn_Convert.IsEnabled = false;
+            ParseDataFile(fileName);
+            btn_Convert.IsEnabled = false;
 
-                ComboBoxItem selectedItem = (ComboBoxItem)Combo_Direction.SelectedItem;
-                string startDirection = selectedItem.Content.ToString();
-
-                switch (startDirection)
-                {
-                    case "Up":
-                        {
-                            directionMovedLast = 1;
-                            return;
-                        }
-                    case "North":
-                        {
-                            directionMovedLast = 2;
-                            return;
-                        }
-                    case "Right":
-                        {
-                            directionMovedLast = 3;
-                            return;
-                        }
-                    case "East":
-                        {
-                            directionMovedLast = 4;
-                            return;
-                        }
-                    case "Down":
-                        {
-                            directionMovedLast = 5;
-                            return;
-                        }
-                    case "South":
-                        {
-                            directionMovedLast = 6;
-                            return;
-                        }
-                    case "Left":
-                        {
-                            directionMovedLast = 7;
-                            return;
-                        }
-                    case "West":
-                        {
-                            directionMovedLast = 8;
-                            return;
-                        }
-                }
-            }
         }
         //Make sure that only intergers can be input into our text boxes
         private void PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -488,3 +422,6 @@ namespace Razor2Rail
         }
     }
 }
+
+
+
