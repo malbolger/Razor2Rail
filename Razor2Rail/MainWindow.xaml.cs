@@ -345,6 +345,7 @@ namespace Razor2Rail
             lbl_Instructions.Foreground = colorBrush;
             lbl_Instructions.Content = fileNameSplit.Last() + " Selected";
             lbl_Instructions.HorizontalAlignment = HorizontalAlignment.Center;
+            lbl_Instructions2.Visibility = Visibility.Collapsed;
         }
 
         private void SaveToFile()
