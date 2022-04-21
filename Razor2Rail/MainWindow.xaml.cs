@@ -355,32 +355,33 @@ namespace Razor2Rail
 
             //moveList Section
             writer.WriteLine("if not listexists moveList");
-            writer.WriteLine("createlist moveList");
+            writer.WriteLine("    " + "createlist moveList");
             foreach (string line in moveList)
             {
-                writer.WriteLine(line);
+                writer.WriteLine("    " + line);
             }
             writer.WriteLine("endif");
             writer.WriteLine(String.Empty);
 
             //xCoord Section
             writer.WriteLine("if not listexists xCoord");
-            writer.WriteLine("createlist xCoord");
+            writer.WriteLine("    " + "createlist xCoord");
             foreach (string line in xCoord)
             {
-                writer.WriteLine(line);
+                writer.WriteLine("    " + line);
             }
             writer.WriteLine("endif");
             writer.WriteLine(String.Empty);
 
             //yCoordSection
             writer.WriteLine("if not listexists yCoord");
-            writer.WriteLine("createlist yCoord");
+            writer.WriteLine("    " + "createlist yCoord");
             foreach (string line in yCoord)
             {
-                writer.WriteLine(line);
+                writer.WriteLine("    " +line);
             }
             writer.WriteLine("endif");
+            writer.WriteLine("script 'Harvester'");
             writer.WriteLine(String.Empty);
 
             writer.Close();
