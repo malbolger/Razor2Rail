@@ -1,6 +1,6 @@
 # Razor2Rail
 
-- Go to the location you want to start youor rail in game.
+- Go to the location you want to start your rail in game.
 - Use the '>info' command and click your character.
 - Write down the position information we will use that in just a bit. [Position: (1750, 3004, 58)] 
 - We will only be using the first two numbers of this as X and Y. (X: 1750, Y:3004)
