@@ -9,6 +9,6 @@
 - Record a [macro] of your movements in-game with razor.
 - Download the latest release of Razor2Rail.
 - Open Razor2Rail and input your X, Y, and Direction information into the slots given.
-- Press open, select the macro you just recorded and press covert.
+- Press open, select the macro you just recorded and press convert.
 - There will be a rails.txt file in the base directory of the program.
 - Copy the entire contents of this file into your rail script in razor.
