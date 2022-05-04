@@ -16,7 +16,7 @@
         <TextBox x:Name="txtBox_xCoord" GotFocus="TextBox_GotFocus" PreviewTextInput="PreviewTextInput" HorizontalAlignment="Left" Margin="41,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
         <TextBox x:Name="txtBox_yCoord" GotFocus="TextBox_GotFocus" IsEnabled="{Binding ElementName=txtBox_xCoord,Path=Text.Length}" PreviewTextInput="PreviewTextInput" HorizontalAlignment="Left" Margin="112,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
         <ComboBox x:Name="Combo_Direction" HorizontalAlignment="Left" Margin="203,95,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.43,0.52">
-            <ComboBoxItem Content="Up" Name="Up" IsSelected="True"></ComboBoxItem>
+            <ComboBoxItem Content="Select One" Name="SelectPlease" IsSelected="True"></ComboBoxItem>
             <ComboBoxItem Content="North" Name="North"></ComboBoxItem>
             <ComboBoxItem Content="Right" Name="Right"></ComboBoxItem>
             <ComboBoxItem Content="East" Name="East"></ComboBoxItem>
@@ -24,6 +24,7 @@
             <ComboBoxItem Content="South" Name="South"></ComboBoxItem>
             <ComboBoxItem Content="Left" Name="Left"></ComboBoxItem>
             <ComboBoxItem Content="West" Name="West"></ComboBoxItem>
+            <ComboBoxItem Content="Up" Name="Up"></ComboBoxItem>
         </ComboBox>
         <Label Content="Starting Direction" HorizontalAlignment="Left" Margin="208,76,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" FontSize="10"/>
         <Label Content="X:" HorizontalAlignment="Left" Margin="23,93,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF"/>

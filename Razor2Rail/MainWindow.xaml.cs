@@ -34,8 +34,6 @@ namespace Razor2Rail
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
 
         private void FormatRails(List<string> railLocationStrings)
@@ -49,6 +47,9 @@ namespace Razor2Rail
                 moveList.Add("pushlist moveList '" + finishedRailLoc.ToString() + "'");
 
             }
+
+
+            directionMovedLast = Combo_Direction.SelectedIndex;
 
             //Create xCoord and yCoord Lists
             foreach (string nextStep in railLocationStrings)
@@ -312,6 +313,40 @@ namespace Razor2Rail
 
             //Save our lists to text to be added in game.
             SaveToFile();
+        }
+
+        private int directionConverted(int name)
+        {
+            int dir = 0;
+
+            switch (name)
+            {
+                //case "Up":
+                //    dir = 8;
+                //    break;
+                //case "North":
+                //    dir = 1;
+                //    break;
+                //case "Right":
+                //    dir = 2;
+                //    break;
+                //case "East":
+                //    dir = 3;
+                //    break;
+                //case "Down":
+                //    dir = 4;
+                //    break;
+                //case "South":
+                //    dir = 5;
+                //    break;
+                //case "Left":
+                //    dir = 6;
+                //    break;
+                //case "West":
+                //    dir = 7;
+                //    break;
+            }
+            return dir;
         }
         private void ParseDataFile(string dataFile)
         {
