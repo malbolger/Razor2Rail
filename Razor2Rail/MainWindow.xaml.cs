@@ -315,39 +315,6 @@ namespace Razor2Rail
             SaveToFile();
         }
 
-        private int directionConverted(int name)
-        {
-            int dir = 0;
-
-            switch (name)
-            {
-                //case "Up":
-                //    dir = 8;
-                //    break;
-                //case "North":
-                //    dir = 1;
-                //    break;
-                //case "Right":
-                //    dir = 2;
-                //    break;
-                //case "East":
-                //    dir = 3;
-                //    break;
-                //case "Down":
-                //    dir = 4;
-                //    break;
-                //case "South":
-                //    dir = 5;
-                //    break;
-                //case "Left":
-                //    dir = 6;
-                //    break;
-                //case "West":
-                //    dir = 7;
-                //    break;
-            }
-            return dir;
-        }
         private void ParseDataFile(string dataFile)
         {
             var lines = File.ReadAllLines(dataFile);
