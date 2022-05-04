@@ -1,3 +1,9 @@
+<div id="header" align="right">
+	<h1>
+  		GRAB IT HERE! <img src="https://s3.envato.com/files/148177745/Still.jpg" width="100"/>
+	</h1>
+</div>
+
 # Razor2Rail
 
 - Go to the location you want to start your rail in game.
