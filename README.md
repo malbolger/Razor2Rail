@@ -6,6 +6,9 @@
 
 # Razor2Rail
 
+- **Rail Creation Video**
+	- [![IMAGE ALT TEXT](https://user-images.githubusercontent.com/11452884/167266722-cae5765e-c830-42ac-aa7f-83e71f90dbd1.jpg)](https://www.youtube.com/watch?v=xAIKKuQ62sI "Rail Creation for Razor2Rail")
+
 - Go to the location you want to start your rail in game.
 - Use the '>info' command and click your character.
 - Write down the position information we will use that in just a bit. [Position: (1750, 3004, 58)] 
