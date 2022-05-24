@@ -37,6 +37,8 @@ namespace Razor2Rail
         public MainWindow()
         {
             InitializeComponent();
+
+            chkBox_Lumber.IsChecked = true;
         }
 
         private void FormatRails(List<string> railLocationStrings)
@@ -450,15 +452,26 @@ namespace Razor2Rail
 
         private void chkBox_Lumber_Checked(object sender, RoutedEventArgs e)
         {
-            chkBox_Mining.IsChecked = false;
-
-            lumberScript = true;
+                chkBox_Mining.IsChecked = false;
+                lumberScript = true;
         }
 
         private void chkBox_Mining_Checked(object sender, RoutedEventArgs e)
         {
-            chkBox_Lumber.IsChecked = false;
+                chkBox_Lumber.IsChecked = false;
+                lumberScript = false;
+        }
+
+        private void chkBox_Lumber_Unchecked(object sender, RoutedEventArgs e)
+        {
+            chkBox_Mining.IsChecked = true;
             lumberScript = false;
+        }
+
+        private void chkBox_Mining_Unchecked(object sender, RoutedEventArgs e)
+        {
+            chkBox_Lumber.IsChecked = true;
+            lumberScript = true;
         }
     }
 }
