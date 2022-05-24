@@ -30,6 +30,9 @@ namespace Razor2Rail
         public static List<string> moveList = new();
         public static List<string> xCoord = new();
         public static List<string> yCoord = new();
+        private bool lumberScript;
+        private int startingX;
+        private int startingY;
 
         public MainWindow()
         {
@@ -353,9 +356,11 @@ namespace Razor2Rail
         private void SaveToFile()
         {
 
-            TextWriter writer = new StreamWriter("rails.txt");
+            TextWriter writer = new StreamWriter(startingX.ToString()+"-"+startingY.ToString()+".txt");
 
             //moveList Section
+            writer.WriteLine("# Starting Location " + startingX.ToString() + " - " + startingY.ToString());
+            writer.WriteLine("overhead '::: rail loading :::'");
             writer.WriteLine("if not listexists moveList");
             writer.WriteLine("    " + "createlist moveList");
             foreach (string line in moveList)
@@ -380,10 +385,18 @@ namespace Razor2Rail
             writer.WriteLine("    " + "createlist yCoord");
             foreach (string line in yCoord)
             {
-                writer.WriteLine("    " +line);
+                writer.WriteLine("    " + line);
             }
             writer.WriteLine("endif");
-            writer.WriteLine("script 'Harvester'");
+            writer.WriteLine("overhead '::: rail loaded :::'");
+            if (lumberScript == true)
+            {
+                writer.WriteLine("script 'Harvester'");
+            }
+            else
+            {
+                writer.WriteLine("script 'M_Harvester'");
+            }
             writer.WriteLine(String.Empty);
 
             writer.Close();
@@ -392,11 +405,18 @@ namespace Razor2Rail
             Brush colorBrush = new SolidColorBrush(Color.FromArgb(255, 43, 255, 0));
             lbl_Instructions.Content = "Converted " + moveList.Count.ToString() + " Lines";
             lbl_Instructions.Foreground = colorBrush;
-
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
+            //clear our lists and get ready to accept information
+            splitStrings.Clear();
+            formattedRailStrings.Clear();
+            moveList.Clear();
+            xCoord.Clear();
+            yCoord.Clear();
+
+
             OpenFile();
             btn_Convert.IsEnabled = true;
         }
@@ -406,6 +426,9 @@ namespace Razor2Rail
             //Quick and Dirty.
             x = Int32.Parse(txtBox_xCoord.Text);
             y = Int32.Parse(txtBox_yCoord.Text);
+
+            startingX = x;
+            startingY = y;
 
             ParseDataFile(fileName);
             btn_Convert.IsEnabled = false;
@@ -423,6 +446,19 @@ namespace Razor2Rail
             TextBox textBox = sender as TextBox;
             textBox.Text = String.Empty;
             textBox.GotFocus -= TextBox_GotFocus;
+        }
+
+        private void chkBox_Lumber_Checked(object sender, RoutedEventArgs e)
+        {
+            chkBox_Mining.IsChecked = false;
+
+            lumberScript = true;
+        }
+
+        private void chkBox_Mining_Checked(object sender, RoutedEventArgs e)
+        {
+            chkBox_Lumber.IsChecked = false;
+            lumberScript = false;
         }
     }
 }

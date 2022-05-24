@@ -29,6 +29,8 @@
         <Label Content="Starting Direction" HorizontalAlignment="Left" Margin="208,76,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" FontSize="10"/>
         <Label Content="X:" HorizontalAlignment="Left" Margin="23,93,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF"/>
         <Label Content="Y:" HorizontalAlignment="Left" Margin="92,93,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF"/>
+        <CheckBox x:Name="chkBox_Lumber" Content="Lumberjack" HorizontalAlignment="Left" Margin="19,125,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" Checked="chkBox_Lumber_Checked"/>
+        <CheckBox x:Name="chkBox_Mining" Content="Mining&#xA;" HorizontalAlignment="Left" Margin="108,125,0,0" VerticalAlignment="Top" Foreground="#FF0DF9FF" Checked="chkBox_Mining_Checked"/>
 
 
     </Grid>
