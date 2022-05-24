@@ -1,4 +1,13 @@
+<div id="header" align="right">
+	<h1>
+  		GRAB IT HERE! <img src="https://s3.envato.com/files/148177745/Still.jpg" width="100"/>
+	</h1>
+</div>
+
 # Razor2Rail
+
+- **Rail Creation Video**
+	- [![IMAGE ALT TEXT](https://user-images.githubusercontent.com/11452884/167266722-cae5765e-c830-42ac-aa7f-83e71f90dbd1.jpg)](https://www.youtube.com/watch?v=xAIKKuQ62sI "Rail Creation for Razor2Rail")
 
 - Go to the location you want to start your rail in game.
 - Use the '>info' command and click your character.
